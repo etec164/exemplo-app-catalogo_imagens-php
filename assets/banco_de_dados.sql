@@ -18,3 +18,10 @@ CREATE TABLE imagens(
     url VARCHAR(255) NOT NULL UNIQUE,
     id_usuario INT NOT NULL REFERENCES usuarios(id)
 );
+
+CREATE TABLE comentarios(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_imagem INT NOT NULL REFERENCES imagens(id),
+    id_usuario INT NOT NULL REFERENCES usuarios(id),
+    texto TEXT NOT NULL
+);

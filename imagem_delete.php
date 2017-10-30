@@ -26,6 +26,11 @@ $imagem = $comando->fetch(\PDO::FETCH_ASSOC);
     * com o id especificado. */
 necessitaAutorizacao(false, $imagem['id_usuario']);
 
+$comando = $bd->prepare(
+    'DELETE FROM comentarios WHERE id_imagem = :i');
+/* Executa o comando preparado */
+$result = $comando->execute([':i' => $id]);
+
 /* Cria um comando SQL do PDO para ser executado contendo a consulta que
     * criará um novo registro de usuário */
 $comando = $bd->prepare(
