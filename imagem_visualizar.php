@@ -1,9 +1,9 @@
 <?php
-// Inclui o arquivo 'includes/conexao_de_dados.php'
+//Inclui o arquivo 'includes/conexao_de_dados.php'
 require_once 'includes/conexao_de_dados.php';
-// Inclui o script 'includes/autenticacao.php'
+// Inclui o arquivo 'includes/autenticacao.php'
 require_once 'includes/autenticacao.php';
-// Inclui o script 'includes/mensagem.php'
+// Inclui o arquivo 'includes/mensagem.php'
 require_once 'includes/mensagem.php';
 // Inclui o arquivo 'includes/requisicao.php'
 require_once 'includes/requisicao.php';
@@ -11,39 +11,35 @@ require_once 'includes/requisicao.php';
 // Captura o id via método 'GET'
 $id = $_GET['id'];
 
-/* Define que esta página somente será acessivel por administradores ou o usuário
- * com o id especificado. */
-necessitaAutorizacao(false, $id);
-
-/* Utiliza a função 'obterConexao()' [conexao_de_dados.php] para estabelecer
-* uma conexão com o banco de dados e armazena sua referência na variável 'bd' */
 $bd = obterConexao();
 /* Cria um comando SQL do PDO para ser executado contendo a consulta que
- * retornará o usuário correspondente ao 'id' solicidado */
+ * retornará todos as imagens cadastradas do usuário atualmente logado */
 $comando = $bd->prepare(
-    'SELECT * FROM usuarios WHERE id = :i');
+    'SELECT * FROM imagens WHERE id = :i');
  /* Executa o comando preparado */
 $result = $comando->execute([':i' => $id]);
-// Armazena o resultado da consulta no vetor 'usuarios'
-$usuario = $comando->fetch(\PDO::FETCH_ASSOC);
+// Armazena o resultado da consulta no vetor 'imagem'
+$imagem = $comando->fetch(\PDO::FETCH_ASSOC);
+
+/* Define que esta página somente será acessivel por administradores ou o usuário
+    * com o id especificado. */
+necessitaAutorizacao(false, $imagem['id_usuario']);
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Excluir Usuário</title>
+        <title>Usuários</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/css/imagem_visualizar.css" rel="stylesheet" />
     </head>
     <body>
         <div class="container">
-            <h1>Excluir Usuário</h1>
-            <p>Deseja remover o usuário "<?= $usuario['email'] ?>" ?</p>
-            <!-- Cria o formulário  -->
-            <form action="usuario_delete_confirm.php" method="post">
-                <!-- Passa o id do usuário através de um campo oculto -->
-                <input type="hidden" name="id" value="<?= $usuario['id'] ?>" />
-                <input class="btn btn-danger" type="submit" value="Excluir" />
-            </form>
+            <h1>Imagem</h1>
+            <a class="btn btn-default" href="imagem_listar.php">Voltar</a>
+            <figure>
+                <img src="<?=$imagem[url]?>" />
+            </figure>
             <!-- Lista as mensagens para esta página caso existam -->
             <div id="mensagens">
                 <ul>

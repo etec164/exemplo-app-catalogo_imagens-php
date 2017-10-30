@@ -32,36 +32,41 @@ $usuario = $comando->fetch(\PDO::FETCH_ASSOC);
     <head>
         <meta charset="utf-8" />
         <title>Editar Usuário</title>
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     </head>
     <body>
-        <h1>Editar Usuário</h1>
-        <!-- Cria o formulário para novo usuário -->
-        <form action="usuario_update_confirm.php" method="post">
-            <!-- Passa o id do usuário através de um campo oculto -->
-            <input type="hidden" name="id" value="<?= $usuario['id'] ?>" />
-            <label>E-Mail:</label>
-            <input type="email" name="email" value="<?= $usuario['email'] ?>" disabled />
-            <label>Senha</label>
-            <input type="password" name="senha" />
-            <label>Confirmação de Senha</label>
-            <input type="password" name="senha_confirm" />
-            <label>Usuário Administrador</label>
-            <!-- Utiliza a função 'estaAutorizado' [autenticacao.php] para verificar se o
-                 usuário logado é administrador. Caso não seja inclui atributo 'disabled'
-                 no controle 'checkbox' -->
-            <input type="checkbox" name="administrador" <?= estaAutorizado(TRUE) ? '' : 'disabled' ?> <?= $usuario['administrador'] ? 'checked' : '' ?> />
-            <input type="submit" value="Salvar" />
-        </form>
-        <!-- Lista as mensagens para esta página caso existam -->
-        <div id="mensagens">
-            <ul>
-                <!-- Utiliza a função 'obterMensagem' [mensagem.php] passando como parâmetro
-                     o nome do arquivo atual através da função 'basename(__FILE__)', para
-                     ler as mensagens caso existam. -->
-                <?php while($msg = obterMensagem(basename(__FILE__))): ?>
-                <li><?= $msg['mensagem'] ?></li>
-                <?php endwhile ?>
-            </ul>
-        </div>
+        <div class="container">
+            <h1>Editar Usuário</h1>
+            <form action="usuario_update_confirm.php" method="post">
+                <input type="hidden" name="id" value="<?= $usuario['id'] ?>" />
+                <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" name="email" class="form-control" value="<?= $usuario['email'] ?>" disabled  />
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="passwd" name="senha" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="passwd" name="senha_confirm"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Usuário Administrador</label>
+                    <input type="checkbox" name="administrador" <?= estaAutorizado(TRUE) ? '' : 'disabled' ?> <?= $usuario['administrador'] ? 'checked' : '' ?> />
+                </div>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </form>
+            <!-- Lista as mensagens para esta página caso existam -->
+            <div id="mensagens">
+                <ul>
+                    <!-- Utiliza a função 'obterMensagem' [mensagem.php] passando como parâmetro
+                        o nome do arquivo atual através da função 'basename(__FILE__)', para
+                        ler as mensagens caso existam. -->
+                    <?php while($msg = obterMensagem(basename(__FILE__))): ?>
+                    <li><?= $msg['mensagem'] ?></li>
+                    <?php endwhile ?>
+                </ul>
+            </div>
     </body>
 </html>

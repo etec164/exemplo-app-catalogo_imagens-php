@@ -4,7 +4,7 @@ require_once 'includes/autenticacao.php';
 // Inclui o script 'includes/mensagem.php'
 require_once 'includes/mensagem.php';
 
-$titulo = "Novo Usuário";
+$titulo = "Adicionar Imagem";
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,25 +15,14 @@ $titulo = "Novo Usuário";
     </head>
     <body>
         <div class="container">
-            <form action="usuario_insert_confirm.php" method="post">
-                <h3><?=$titulo?></h3>
+            <h1><?=$titulo?></h1>
+            <form action="imagem_insert_confirm.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label>E-Mail</label>
-                    <input type="email" name="email" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Senha</label>
-                    <input type="passwd" name="senha" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Confirmar Senha</label>
-                    <input type="passwd" name="senha_confirm"  class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Usuário Administrador</label>
-                    <input type="checkbox" name="administrador" <?= estaAutorizado(TRUE) ? '' : 'disabled' ?> />
+                    <label>Arquivo</label>
+                    <input type="file" name="fileUpload" />
                 </div>
                 <button type="submit" class="btn btn-success">Salvar</button>
+                <a href="imagem_listar.php" class="btn btn-default">Voltar</a>
             </form>
             <!-- Lista as mensagens para esta página caso existam -->
             <div id="mensagens">
