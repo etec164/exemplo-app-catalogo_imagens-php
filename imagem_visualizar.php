@@ -47,7 +47,7 @@ necessitaAutorizacao(false, $imagem['id_usuario']);
             <h1>Imagem</h1>
             <a class="btn btn-default" href="imagem_listar.php">Voltar</a>
             <figure>
-                <img src="<?=$imagem[url]?>" />
+                <img src="<?=$imagem['url']?>" />
             </figure>
             <form action="comentario_insert.php" method="post">
                 <input type="hidden" name="id_imagem" value="<?=$imagem['id']?>" />
